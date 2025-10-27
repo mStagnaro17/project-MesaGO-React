@@ -6,7 +6,8 @@ import Sidebar from "../components/Sidebar"
 import Header from "../components/Header"
 import StatsCards from "../components/StatsCards"
 import OrdersList from "../components/OrdersList"
-import OrderDetails from "../components/OrderDetails"
+import DetailOrder from "../components/DetailOrder"
+import FacturacionDetails from "../components/FacturacionDetails"
 import "../styles/Dashboard.css"
 
 interface Order {
@@ -103,7 +104,12 @@ const DashboardPage: React.FC = () => {
               onSelectOrder={setSelectedOrder}
               loading={loading}
             />
-            {selectedOrder && <OrderDetails order={selectedOrder} />}
+            {selectedOrder && (
+              <>
+                <DetailOrder order={selectedOrder} />
+                <FacturacionDetails order={selectedOrder} />
+              </>
+            )}
           </div>
         </div>
       </div>

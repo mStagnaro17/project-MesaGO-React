@@ -21,16 +21,18 @@
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: 1fr 1fr 1fr; /* tres columnas iguales */
+  gap: 1rem; /* espacio entre las columnas */
+  align-items: start;
   margin-top: 24px;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1024px) {
   .dashboard-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* en pantallas pequeñas, una debajo de otra */
   }
 }
+
 
 @media (max-width: 768px) {
   .dashboard-container {

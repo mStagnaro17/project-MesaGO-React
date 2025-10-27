@@ -3,6 +3,8 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import "../styles/Sidebar.css"
+import logo from "../../assets/Logo.png";
+
 
 const menuItems = [
   { id: "dashboard", label: "Dashboard" },
@@ -34,7 +36,7 @@ const Sidebar: React.FC = () => {
     <aside className="sidebar">
       <div className="sidebar-header">
         <div className="sidebar-logo">
-          <img src="/mesago-logo.jpg" alt="MesaGO" className="logo-image" />
+          <img src={logo} alt="MesaGO" className="logo-image" />
         </div>
       </div>
 

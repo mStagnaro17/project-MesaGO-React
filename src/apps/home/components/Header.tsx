@@ -12,10 +12,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   return (
     <header className="dashboard-header">
       <div className="header-left">
-        <div className="header-logo">
-          <span className="logo-icon">🍽️</span>
-          <span className="logo-text">MesaGO</span>
-        </div>
         <h1 className="header-title">Dashboard</h1>
       </div>
 
@@ -32,15 +28,13 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
       </div>
 
       <div className="header-right">
-        <button className="header-icon-btn" aria-label="Messages">
-          <Mail size={20} />
+        <button className="icon-btn" aria-label="Messages">
+          <Mail size={18} />
         </button>
-        <button className="header-icon-btn" aria-label="Notifications">
-          <Bell size={20} />
+        <button className="icon-btn" aria-label="Notifications">
+          <Bell size={18} />
         </button>
-        <button className="header-icon-btn" aria-label="Notifications">
-          <span className="notification-icon">📊</span>
-        </button>
+     
         <div className="user-avatar">
           <img src="/user-profile.jpg" alt="User" />
         </div>

@@ -2,7 +2,7 @@
 .sidebar {
   width: 200px;
   background: #f8f9fa;
-  color: #1e293b;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
@@ -12,16 +12,16 @@
   top: 0;
   border-right: 1px solid #e2e8f0;
 }
-
 .sidebar-header {
-  padding: 20px 16px;
-  border-bottom: 1px solid #e2e8f0;
-  background: white;
+  padding: 1px 1px;   /* menos espacio arriba y abajo */
+  background: #f8f9fa; /* mismo color del sidebar */
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* evita cortes */
+  border-bottom: none; /* elimina línea divisoria */
+  height: 85px;     
 }
-
 .sidebar-logo {
   display: flex;
   align-items: center;
@@ -31,10 +31,13 @@
 
 /* Logo image styling */
 .logo-image {
-  height: 40px;
+  height: 109px;                  /* tamaño cómodo */
   width: auto;
   object-fit: contain;
+  margin: 0;                      /* elimina márgenes negativos */
+  display: block;
 }
+
 
 .sidebar-nav {
   flex: 1;
