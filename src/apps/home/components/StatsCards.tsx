@@ -1,7 +1,6 @@
 import type React from "react"
 import "../styles/StatsCards.css"
 import OrdenesTotales from "../../assets/OrdenesTotales.jpg"
-import ProfilePicture from "../../assets/ProfilePicture.jpg"
 import TotalDespachado from "../../assets/TotalDespachado.jpg"
 import Money2 from "../../assets/Money2.jpg"
 interface Stats {

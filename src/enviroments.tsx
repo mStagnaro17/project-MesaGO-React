@@ -5,18 +5,24 @@ const enviroments = {
     apiUrl:  '/api',
 
     apiAuth: '/auth',
-    apiInventario: '/insumos', /* toda una genialidad un microservicio llamado Inventario con url insumos xd*/
+  
+    apiMenu: '/menu',
+    apiCategorias: '/categorias',
+
 
     apiClientes: '/clientes',
-    apiUsers: '/users'
 
-    /* Vayan agregando, ojito porque el header siempre debe ir con el jwt, cómo lo voy a hacer aún no sé, bueno sí sé sino sería cualquiera.*/
+    apiProveedorInsumo: '/proveedor-insumo',
+    apiInsumos: '/insumos',
 
-    /* 
-    apiPedidos ...
-    apiCatalogoMenu ...
-    etc, etc
-    */
+
+    apiPedidos: '/pedidos',
+    apiMesas: '/mesas',
+    apiDetalles: '/detalles',
+
+    apiReservas: '/reservas',
+
+    apiUsers: '/users',
 }
 
 export default enviroments

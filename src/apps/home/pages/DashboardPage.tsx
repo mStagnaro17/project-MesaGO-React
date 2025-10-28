@@ -9,7 +9,10 @@ import OrdersList from "../components/OrdersList"
 import DetailOrder from "../components/DetailOrder"
 import FacturacionDetails from "../components/FacturacionDetails"
 import "../styles/Dashboard.css"
+import { getPedidos } from "../../../services/pedidoService";
 
+
+// Tipos de datos
 interface Order {
   id: string
   orderNumber: string
@@ -50,32 +53,47 @@ const DashboardPage: React.FC = () => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true)
-        // Reemplaza estas URLs con tus endpoints reales del API Gateway
-        const [ordersRes, statsRes] = await Promise.all([
-          fetch("/api/orders"), // Cambiar por tu endpoint real
-          fetch("/api/stats"), // Cambiar por tu endpoint real
-        ])
+        // Llamada real al backend 
+        const pedidosData = await getPedidos()
 
-        if (ordersRes.ok) {
-          const ordersData = await ordersRes.json()
-          setOrders(ordersData)
-          if (ordersData.length > 0) {
-            setSelectedOrder(ordersData[0])
-          }
+        // Adaptamos los datos del backend a la estructura visual del dashboard
+        const formattedOrders = pedidosData.map((p: any) => ({
+          id: p.id?.toString() || "",
+          orderNumber: `#${p.id}`,
+          customerName: p.cliente?.nombre || "Sin cliente",
+          status:
+            p.estado?.toLowerCase() === "completado"
+              ? "completed"
+              : p.estado?.toLowerCase() === "cancelado"
+              ? "cancelled"
+              : "pending",
+          items:
+            p.detalles?.map((d: any) => ({
+              id: d.id?.toString(),
+              name: d.plato?.nombre || "Sin nombre",
+              quantity: d.cantidad || 1,
+              price: d.precio || 0,
+              status: "ready",
+            })) || [],
+          total: p.total || 0,
+          createdAt: p.fechaRegistro || new Date().toISOString(),
+          address: p.mesa?.ubicacion || "Sin ubicación",
+        }))
+
+        // Guardamos los pedidos formateados
+        setOrders(formattedOrders)
+        if (formattedOrders.length > 0) {
+          setSelectedOrder(formattedOrders[0])
         }
 
-        if (statsRes.ok) {
-          const statsData = await statsRes.json()
-          setStats(statsData)
-        }
+       setStats({
+  totalOrders: formattedOrders.length,
+  totalDispatched: formattedOrders.filter((o: Order) => o.status === "completed").length,
+  totalRevenue: formattedOrders.reduce((sum: number, o: Order) => sum + (o.total || 0), 0)
+});
+
       } catch (error) {
-        console.error("Error fetching dashboard data:", error)
-        // Datos de ejemplo para desarrollo
-        setOrders(mockOrders)
-        setStats(mockStats)
-        if (mockOrders.length > 0) {
-          setSelectedOrder(mockOrders[0])
-        }
+        console.error(" Error al obtener datos del dashboard:", error)
       } finally {
         setLoading(false)
       }
@@ -84,10 +102,11 @@ const DashboardPage: React.FC = () => {
     fetchDashboardData()
   }, [])
 
+  //  Filtro por nombre o número de orden
   const filteredOrders = orders.filter(
     (order) =>
       order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.customerName.toLowerCase().includes(searchTerm.toLowerCase()),
+      order.customerName.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
@@ -115,47 +134,6 @@ const DashboardPage: React.FC = () => {
       </div>
     </div>
   )
-}
-
-const mockOrders: Order[] = [
-  {
-    id: "1",
-    orderNumber: "#01823",
-    customerName: "Peter Kukurelo",
-    status: "pending",
-    items: [
-      { id: "1", name: "Arroz con Mariscos", quantity: 2, price: 25000, status: "ready" },
-      { id: "2", name: "Leche de Tigre", quantity: 1, price: 15000, status: "pending" },
-      { id: "3", name: "Combo marino-Jr", quantity: 1, price: 18000, status: "pending" },
-    ],
-    total: 58000,
-    createdAt: "2024-10-25T10:30:00",
-    address: "Avenida 5 - Niños 1",
-  },
-  {
-    id: "2",
-    orderNumber: "#01822",
-    customerName: "Camila Campos",
-    status: "completed",
-    items: [{ id: "1", name: "Mar Mil Frita", quantity: 1, price: 22000, status: "delivered" }],
-    total: 22000,
-    createdAt: "2024-10-25T09:15:00",
-  },
-  {
-    id: "3",
-    orderNumber: "#01821",
-    customerName: "Valeria Hayatt",
-    status: "cancelled",
-    items: [{ id: "1", name: "Ceviche Especial", quantity: 1, price: 28000, status: "pending" }],
-    total: 28000,
-    createdAt: "2024-10-25T08:45:00",
-  },
-]
-
-const mockStats: Stats = {
-  totalOrders: 1750,
-  totalDispatched: 560,
-  totalRevenue: 23350.25,
 }
 
 export default DashboardPage
