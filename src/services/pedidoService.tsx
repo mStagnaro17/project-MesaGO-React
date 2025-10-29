@@ -1,49 +1,34 @@
 import { apiFetch } from "./apiService";
 
+// 🟢 GET: obtener todos los pedidos
+export const getPedidos = async () => {
+  return await apiFetch("/pedidos");
+};
 
-// 🧾 PEDIDOS
-export const getPedidos = async () =>
-  apiFetch("/pedidos"); //
+// 🟢 GET: obtener pedido por ID
+export const getPedidoById = async (id: number) => {
+  return await apiFetch(`/pedidos/${id}`);
+};
 
-export const getPedidoById = async (id: number) =>
-  apiFetch(`/pedidos/${id}`); //
+// 🟡 POST: crear un nuevo pedido
+export const createPedido = async (pedidoData: any) => {
+  return await apiFetch("/pedidos", {
+    method: "POST",
+    body: pedidoData,
+  });
+};
 
-export const createPedido = async (pedido: any) =>
-  apiFetch("/pedidos", { method: "POST", body: pedido });
+// 🟠 PUT: actualizar pedido existente
+export const updatePedido = async (id: number, pedidoData: any) => {
+  return await apiFetch(`/pedidos/${id}`, {
+    method: "PUT",
+    body: pedidoData,
+  });
+};
 
-export const updatePedido = async (id: number, pedido: any) =>
-  apiFetch(`/pedidos/${id}`, { method: "PUT", body: pedido });
-
-export const deletePedido = async (id: number) =>
-  apiFetch(`/pedidos/${id}`, { method: "DELETE" });
-
-
-// 🍽️ MESAS
-export const getMesas = async () =>
-  apiFetch("/mesas");
-
-export const createMesa = async (mesa: any) =>
-  apiFetch("/mesas", { method: "POST", body: mesa });
-
-export const updateMesa = async (id: number, mesa: any) =>
-  apiFetch(`/mesas/${id}`, { method: "PUT", body: mesa });
-
-export const deleteMesa = async (id: number) =>
-  apiFetch(`/mesas/${id}`, { method: "DELETE" });
-
-
-// 📦 DETALLES DE PEDIDO
-export const getDetalles = async () =>
-  apiFetch("/detalles");
-
-export const getDetalleById = async (id: number) =>
-  apiFetch(`/detalles/${id}`);
-
-export const createDetalle = async (detalle: any) =>
-  apiFetch("/detalles", { method: "POST", body: detalle });
-
-export const updateDetalle = async (id: number, detalle: any) =>
-  apiFetch(`/detalles/${id}`, { method: "PUT", body: detalle });
-
-export const deleteDetalle = async (id: number) =>
-  apiFetch(`/detalles/${id}`, { method: "DELETE" });
+// 🔴 DELETE: eliminar pedido por ID
+export const deletePedido = async (id: number) => {
+  return await apiFetch(`/pedidos/${id}`, {
+    method: "DELETE",
+  });
+};
