@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Sidebar.css";
 import logo from "../../assets/Logo.png";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 const menuItems = [
   { id: "dashboard", label: "Dashboard" },
@@ -35,11 +37,34 @@ const Sidebar: React.FC = () => {
 
   // 🔹 Función para cerrar sesión
   const handleLogout = () => {
-    const confirmLogout = window.confirm("¿Deseas cerrar sesión?");
-    if (confirmLogout) {
-      localStorage.removeItem("token"); // ❌ Borra el token
-      navigate("/login"); // 🚀 Redirige al login
-    }
+    Swal.fire({
+      title: "¿Deseas cerrar sesión?",
+      text: "Tu sesión actual se cerrará.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, salir",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#dc2626", // rojo Tailwind
+      cancelButtonColor: "#6b7280", // gris
+      background: "#f9fafb",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+
+        Swal.fire({
+          title: "Cerrando sesión...",
+          text: "Redirigiendo al login...",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1800, // ⏱️ Espera 1.8s y redirige
+          timerProgressBar: true,
+          willClose: () => {
+            navigate("/login");
+          },
+        });
+      }
+    });
   };
 
   return (

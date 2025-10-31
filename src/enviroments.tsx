@@ -1,6 +1,6 @@
 const enviroments = {
 
-    apiPathBase: 'http://52.15.79.108:8080',
+    apiPathBase: 'http://localhost:8080',
 
     apiUrl:  '/api',
 

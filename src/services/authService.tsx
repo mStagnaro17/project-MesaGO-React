@@ -1,4 +1,5 @@
 import enviroments from "../enviroments";
+import type { ApiResponse } from "../core/entity/apiResponse";
 
 export interface LoginResponse {
     token: string;
@@ -10,6 +11,8 @@ interface LoginCredentials {
     username: string;
     password: string;
 }
+
+
 
 // ✅ Guardar / obtener / limpiar token
 export const setToken = (token: string) => {
@@ -37,22 +40,25 @@ export const login = async ({ username, password }: LoginCredentials): Promise<L
         body: JSON.stringify({ username, password }),
     });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Credenciales incorrectas o error en el servidor');
+    const responseData: ApiResponse<{
+        accessToken: string;
+        username: string;
+        role: string;
+    }> = await response.json();
+
+    if (!response.ok || !responseData.success) {
+        throw new Error(responseData.message || 'Credenciales incorrectas o error en el servidor');
     }
 
-    const data = await response.json();
-
     // ✅ Guardar el token en localStorage
-    setToken(data.accessToken);
+    setToken(responseData.data.accessToken);
 
-    console.log("Login exitoso:", data);
+    console.log("Login exitoso:", responseData);
 
     // Retornar con formato estandarizado
     return {
-        token: data.accessToken,
-        username: data.username,
-        role: data.role,
+        token: responseData.data.accessToken,
+        username: responseData.data.username,
+        role: responseData.data.role,
     };
 };

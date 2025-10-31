@@ -61,14 +61,13 @@ const OrdersList: React.FC<OrdersListProps> = ({ orders, selectedOrder, onSelect
 
           return (
             <div
-  key={order.id}
-  onClick={() => onSelectOrder(order)}
-  className={`p-4 rounded-lg cursor-pointer transition-all relative shadow-sm ${
-    isSelected
-      ? "border-2 border-blue-500 bg-blue-50"
-      : "border border-gray-200 bg-white hover:shadow-md hover:border-gray-300"
-  }`}
->
+              key={order.id}
+              onClick={() => onSelectOrder(order)}
+              className={`p-4 rounded-lg cursor-pointer transition-all relative shadow-sm ${isSelected
+                  ? "border-2 border-blue-500 bg-blue-50"
+                  : "border border-gray-200 bg-white hover:shadow-md hover:border-gray-300"
+                }`}
+            >
 
               <div className="absolute top-3 right-3">
                 <span
@@ -87,7 +86,15 @@ const OrdersList: React.FC<OrdersListProps> = ({ orders, selectedOrder, onSelect
               <h3 className="font-bold text-gray-900 mb-1 text-base">{order.customerName}</h3>
 
               {/* Time */}
-              <p className="text-xs text-gray-400 mb-3">{order.createdAt}</p>
+              <p className="text-xs text-gray-400 mb-3">
+                {new Date(order.createdAt).toLocaleString("es-PE", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </p>
 
               {/* Items with dropdown */}
               <div className="mb-3">
