@@ -1,0 +1,27 @@
+/* Vista normal: lista + detalle */
+.dashboard-grid.normal-view {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Vista expandida: solo detalle */
+.dashboard-grid.expanded-view {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* Contenedor principal del detalle */
+.facturacion-details-container {
+  width: 120%;
+  max-width: 1200px; /* puedes aumentar más si quieres */
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 9px 50px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
